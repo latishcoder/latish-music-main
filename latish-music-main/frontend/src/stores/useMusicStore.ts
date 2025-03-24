@@ -18,7 +18,7 @@ interface MusicStore {
 	fetchAlbums: () => Promise<void>;
 	fetchAlbumById: (id: string) => Promise<void>;
 	fetchFeaturedSongs: () => Promise<void>;
-	fetchMadeForYouSongs: () => Promise<void>;
+	fetchMadeForYouSongs: (mood:string) => Promise<void>;
 	fetchTrendingSongs: () => Promise<void>;
 	fetchStats: () => Promise<void>;
 	fetchSongs: () => Promise<void>;
@@ -140,10 +140,10 @@ export const useMusicStore = create<MusicStore>((set) => ({
 		}
 	},
 
-	fetchMadeForYouSongs: async () => {
+	fetchMadeForYouSongs: async (mood:string) => {
 		set({ isLoading: true, error: null });
 		try {
-			const response = await axiosInstance.get("/songs/made-for-you");
+			const response = await axiosInstance.get("/songs/made-for-you?mood=" + mood.toLowerCase());
 			set({ madeForYouSongs: response.data });
 		} catch (error: any) {
 			set({ error: error.response.data.message });

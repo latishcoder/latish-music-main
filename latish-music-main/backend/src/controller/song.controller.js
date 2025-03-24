@@ -37,10 +37,16 @@ export const getFeaturedSongs = async (req, res, next) => {
 
 export const getMadeForYouSongs = async (req, res, next) => {
 	try {
-		const songs = await Song.aggregate([
-			{
-				$sample: { size: 4 },
-			},
+
+		const { mood } = req.query;
+
+		const matchStage = mood
+			? { $match: { mood: { $regex: new RegExp(mood, "i") } } }
+			: null;
+
+		const aggregationPipeline = [
+			...(matchStage ? [matchStage] : []),
+			{ $sample: { size: 14 } },
 			{
 				$project: {
 					_id: 1,
@@ -50,9 +56,13 @@ export const getMadeForYouSongs = async (req, res, next) => {
 					audioUrl: 1,
 				},
 			},
-		]);
+		];
+
+		const songs = await Song.aggregate(aggregationPipeline);
 
 		res.json(songs);
+
+
 	} catch (error) {
 		next(error);
 	}

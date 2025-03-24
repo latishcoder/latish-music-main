@@ -27,6 +27,9 @@ const songSchema = new mongoose.Schema(
 			ref: "Album",
 			required: false,
 		},
+		mood:{
+			type: String,
+		}
 	},
 	{ timestamps: true }
 );

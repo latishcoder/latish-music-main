@@ -21,7 +21,12 @@ export const createSong = async (req, res, next) => {
 			return res.status(400).json({ message: "Please upload all files" });
 		}
 
-		const { title, artist, albumId, duration } = req.body;
+		let { title, artist, albumId, duration, mood } = req.body;
+		// console.log("🫡🫡🫡🫡", { title, artist, albumId, duration, mood });
+		if (typeof mood === "object") {
+			mood = mood[0]
+		}
+
 		const audioFile = req.files.audioFile;
 		const imageFile = req.files.imageFile;
 
@@ -34,7 +39,9 @@ export const createSong = async (req, res, next) => {
 			audioUrl,
 			imageUrl,
 			duration,
+			mood,
 			albumId: albumId || null,
+			// mood: req.body.mood || "Unknown",
 		});
 
 		await song.save();

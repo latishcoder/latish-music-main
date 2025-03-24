@@ -17,7 +17,8 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 interface NewSong {
-	title: string;
+	title:string;
+	mood: string;
 	artist: string;
 	album: string;
 	duration: string;
@@ -29,7 +30,8 @@ const AddSongDialog = () => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const [newSong, setNewSong] = useState<NewSong>({
-		title: "",
+		title:"",
+		mood: "",
 		artist: "",
 		album: "",
 		duration: "0",
@@ -55,7 +57,10 @@ const AddSongDialog = () => {
 
 			formData.append("title", newSong.title);
 			formData.append("artist", newSong.artist);
+			formData.append("mood", newSong.mood);
 			formData.append("duration", newSong.duration);
+
+			
 			if (newSong.album && newSong.album !== "none") {
 				formData.append("albumId", newSong.album);
 			}
@@ -70,7 +75,8 @@ const AddSongDialog = () => {
 			});
 
 			setNewSong({
-				title: "",
+				title:"",
+				mood: "",
 				artist: "",
 				album: "",
 				duration: "0",
@@ -161,6 +167,14 @@ const AddSongDialog = () => {
 						<Input
 							value={newSong.title}
 							onChange={(e) => setNewSong({ ...newSong, title: e.target.value })}
+							className='bg-zinc-800 border-zinc-700'
+						/>
+					</div>
+					<div className='space-y-2'>
+						<label className='text-sm font-medium'>Mood</label>
+						<Input
+							value={newSong.mood}
+							onChange={(e) => setNewSong({ ...newSong, mood: e.target.value })}
 							className='bg-zinc-800 border-zinc-700'
 						/>
 					</div>

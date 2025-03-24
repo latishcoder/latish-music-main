@@ -27,7 +27,7 @@ const SongsTable = () => {
 			<TableHeader>
 				<TableRow className='hover:bg-zinc-800/50'>
 					<TableHead className='w-[50px]'></TableHead>
-					<TableHead>Title</TableHead>
+					<TableHead>Mood</TableHead>
 					<TableHead>Artist</TableHead>
 					<TableHead>Release Date</TableHead>
 					<TableHead className='text-right'>Actions</TableHead>

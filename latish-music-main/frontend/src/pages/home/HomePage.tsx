@@ -22,7 +22,7 @@ const HomePage = () => {
 
 	useEffect(() => {
 		fetchFeaturedSongs();
-		fetchMadeForYouSongs();
+		fetchMadeForYouSongs("");
 		fetchTrendingSongs();
 	}, [fetchFeaturedSongs, fetchMadeForYouSongs, fetchTrendingSongs]);
 
